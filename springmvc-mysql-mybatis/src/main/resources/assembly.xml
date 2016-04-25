@@ -1,0 +1,53 @@
+<assembly>
+    <!-- 项目打成Zip包的Id -->
+    <id>${version}</id>
+    <!-- 打zip包时，包含一层打包目录 -->
+    <includeBaseDirectory>true</includeBaseDirectory>
+    <formats>
+        <!-- 包的后缀 -->
+        <format>zip</format>
+    </formats>
+    <!-- 把编译好的jar文件包含到发布的目录中去并设置脚本文件的权限-->
+    <!--<files>-->
+        <!--<file>-->
+            <!--<source>${project.build.directory}/${project.build.finalName}.${project.packaging}</source>-->
+            <!--<destName>dspmetadata.jar</destName>-->
+            <!--<outputDirectory>/lib</outputDirectory>-->
+        <!--</file>-->
+    <!--</files>-->
+
+    <dependencySets>
+        <!-- 项目依赖包的输出目录，下面为当前目录的lib文件夹下 -->
+        <dependencySet>
+            <outputDirectory>/lib</outputDirectory>
+            <useProjectArtifact>true</useProjectArtifact>
+            <!--<scope>runtime</scope>-->
+        </dependencySet>
+    </dependencySets>
+    <fileSets>
+        <!-- 项目一些说明的资源输出的目录，下面为当前目录 -->
+        <fileSet>
+            <!--<directory>${project.basedir}/src/main/resources</directory>-->
+            <!--<outputDirectory>/conf</outputDirectory>-->
+            <!--<includes>-->
+                <!--<include>*.properties</include>-->
+            <!--</includes>-->
+            <directory>${project.basedir}/target/classes</directory>
+            <outputDirectory>/conf</outputDirectory>
+            <includes>
+                <include>*.properties</include>
+                <include>logback.xml</include>
+                <include>spring-mybatis.xml</include>
+            </includes>
+        </fileSet>
+        <fileSet>
+            <directory>${project.basedir}/src/main/resources</directory>
+            <outputDirectory>/bin</outputDirectory>
+            <lineEnding>unix</lineEnding>
+            <fileMode>0755</fileMode>
+            <includes>
+                <include>*.sh</include>
+            </includes>
+        </fileSet>
+    </fileSets>
+</assembly>

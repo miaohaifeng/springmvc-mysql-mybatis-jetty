@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<configuration>
+    <!--<property file="/services/data/dspmetadata/conf/global.properties"/>-->
+    <property resource="global.properties"/>
+
+    <appender name="FILE" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <file>log.txt</file>
+        <encoder>
+            <pattern>%date %level [%thread] %logger{36} [%file : %line] %msg%n</pattern>
+        </encoder>
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            <!-- rollover daily -->
+            <fileNamePattern>log.%d{yyyy-MM-dd}.%i.txt.zip</fileNamePattern>
+            <maxHistory>1</maxHistory>
+            <TimeBasedFileNamingAndTriggeringPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedFNATP">
+                <maxFileSize>50MB</maxFileSize>
+            </TimeBasedFileNamingAndTriggeringPolicy>
+        </rollingPolicy>
+    </appender>
+    <appender name="interface-file" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <file>interface.txt</file>
+        <encoder>
+            <pattern>%date %level [%thread] %logger{36} [%file : %line] %msg%n</pattern>
+        </encoder>
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            <!-- rollover daily -->
+            <fileNamePattern>interface.%d{yyyy-MM-dd}.%i.txt.zip</fileNamePattern>
+            <maxHistory>1</maxHistory>
+            <TimeBasedFileNamingAndTriggeringPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedFNATP">
+                <maxFileSize>50MB</maxFileSize>
+            </TimeBasedFileNamingAndTriggeringPolicy>
+        </rollingPolicy>
+    </appender>
+    <appender name="task-file" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <file>task.txt</file>
+        <encoder>
+            <pattern>%date %level [%thread] %logger{36} [%file : %line] %msg%n</pattern>
+        </encoder>
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            <!-- rollover daily -->
+            <fileNamePattern>task.%d{yyyy-MM-dd}.%i.txt.zip</fileNamePattern>
+            <maxHistory>1</maxHistory>
+            <TimeBasedFileNamingAndTriggeringPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedFNATP">
+                <maxFileSize>50MB</maxFileSize>
+            </TimeBasedFileNamingAndTriggeringPolicy>
+        </rollingPolicy>
+    </appender>
+    <appender name="ERROR" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <file>error.txt</file>
+        <filter class="ch.qos.logback.classic.filter.LevelFilter">
+            <level>ERROR</level>
+            <onMatch>ACCEPT</onMatch>
+            <onMismatch>DENY</onMismatch>
+        </filter>
+        <encoder>
+            <pattern>%date %level [%thread] %logger{36} [%file : %line] %msg%n</pattern>
+        </encoder>
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            <!-- rollover daily -->
+            <fileNamePattern>error.%d{yyyy-MM-dd}.%i.txt.zip</fileNamePattern>
+            <maxHistory>1</maxHistory>
+            <TimeBasedFileNamingAndTriggeringPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedFNATP">
+                <maxFileSize>50MB</maxFileSize>
+            </TimeBasedFileNamingAndTriggeringPolicy>
+        </rollingPolicy>
+    </appender>
+    <appender name="DEBUG" class="ch.qos.logback.core.ConsoleAppender">
+        <!-- encoder defaults to ch.qos.logback.classic.encoder.PatternLayoutEncoder -->
+        <encoder>
+            <pattern>%date %level [%thread] %logger{36} [%file : %line] %msg%n</pattern>
+        </encoder>
+        <layout class="ch.qos.logback.classic.PatternLayout">
+            <pattern>%d{MM-dd HH:mm:ss.SSS}%msg%n</pattern>
+        </layout>
+    </appender>
+
+    <appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
+        <!-- encoder defaults to ch.qos.logback.classic.encoder.PatternLayoutEncoder -->
+        <encoder>
+            <pattern>%date %level [%thread] %logger{36} [%file : %line] %msg%n</pattern>
+        </encoder>
+        <!-- Only log level INFO and above -->
+        <!--  <filter class="ch.qos.logback.classic.filter.ThresholdFilter">
+              <level>${log.root.level}</level>
+          </filter>-->
+    </appender>
+    <logger name="com.madhouse.dsp" level="ERROR" additivity="false">
+        <appender-ref ref="ERROR"/>
+    </logger>
+    <logger name="com.madhouse.dsp" level="INFO" additivity="false">
+        <appender-ref ref="FILE"/>
+    </logger>
+    <logger name="com.madhouse.dsp.metadata.servlet" level="info" additivity="false">
+        <appender-ref ref="interface-file"/>
+    </logger>
+    <logger name="com.madhouse.dsp.matching.controller.task" level="info" additivity="false">
+        <appender-ref ref="task-file"/>
+    </logger>
+    <logger name="org.springframework.scheduling">
+        <level value="info"/>
+    </logger>
+    <!-- the level of the root level is set to DEBUG by default.       -->
+    <root level="root">
+        <appender-ref ref="DEBUG"/>
+    </root>
+</configuration>
